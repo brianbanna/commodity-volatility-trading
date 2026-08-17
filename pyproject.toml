@@ -1,0 +1,49 @@
+[project]
+name = "vol-trading"
+version = "0.0.0"
+description = "Commodity volatility trading: risk premium harvesting, event volatility, skew against physical tightness"
+requires-python = ">=3.11"
+dependencies = [
+    "polars>=1.0",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pyarrow>=16.0",
+    "scipy>=1.13",
+    "statsmodels>=0.14",
+    "pyyaml>=6.0",
+    "requests>=2.32",
+    "matplotlib>=3.9",
+    # statarb is the shared pricing engine from the relative value project. Its API
+    # freezes 20 December 2026 and it is pinned to a tag from that point on. All option
+    # maths and every Greek in this project comes from it. It is never reimplemented here
+    # and never forked. Until the freeze there is nothing to pin, so the dependency is
+    # declared here as a comment rather than as a version range that would resolve to
+    # something unintended.
+    # "statarb==<tag cut 20 December 2026>",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vol_trading*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

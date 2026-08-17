@@ -1,0 +1,172 @@
+# CLAUDE.md, commodity volatility trading
+
+You are in a public repo. Read this file completely before your first tool call, then read
+`SPEC.md`. If you are about to write code and you have not read `SPEC.md`, stop and read it.
+
+---
+
+## 1. SPEC.md is the build authority
+
+`SPEC.md` at the repo root is the full standalone specification for this project. It
+carries Part A the plain words, Part B the ranked goals, Part C worked data scenarios,
+Part D the deliverables table with IDs and dates and acceptance gates, Part E the data
+register, Part F the phase by phase plan, Part G the methods core with the actual
+parameters, Part H the hard rules, Part I the risks with pre committed fallbacks, Part J
+the definition of done, Part K executor notes.
+
+Nothing outside `SPEC.md` is required to execute this project. When this file and
+`SPEC.md` disagree on a fact, `SPEC.md` wins and this file is wrong and should be fixed.
+When they disagree on a prohibition, the stricter reading wins.
+
+`SPEC.md` is reproduced from the master document with 1 token level redaction, marked in a
+comment at the top of the file, required by its own Part H rule 1. Nothing else is altered.
+
+## 2. Where the build stands, and what is next
+
+**Today the repo is at Phase 0, per SPEC Part F.** Phase 0 is the week of 11 to 17 August
+2026 and it is the only August work beyond collection. As of 17 August 2026 the repo holds
+the skeleton, the calendar scaffold, and the spec. No data collected, no result produced.
+
+**The next deliverables, in order:**
+
+- **D1, the data audit note. Due 17 August 2026, which is today.** Per market: the exact
+  retrieval method for the delayed settlement pages and for the option settlement tool,
+  the fields actually available, meaning settlement, implied volatility, open interest, and
+  volume per strike per expiry, the verified free history depth, license notes, and a
+  PASS or CUT verdict. 1 page per market. TTF options are confirmed DROPPED; gas volatility
+  is carried by Henry Hub. **Hard floor: a minimum of 2 PASS markets, WTI and 1 other. If
+  fewer than 2 pass, the project halts and escalates rather than proceeding on 1 market.**
+- **D2, the DataMine academic email.** Was due 12 August 2026, sent the same day as the
+  project 1 EPEX email. Confirm it went and that the outcome is logged before treating it
+  as done. Historical options end of day for the PASS products, EPFL supervised research
+  framing, 150 EUR threshold, lab escalation if quoted above. This is the highest leverage
+  single action in the project because no free backfill exists.
+- **D3, the daily collection jobs. Due 18 August 2026, tomorrow.** Scrapes of the
+  settlement pages AND the option settlement tool, 2x daily, platform scheduled, raw files
+  immutable and checksummed. Gate: 7 consecutive clean days per market. **From the day
+  this goes live, the history clock runs. Every day it is down is a day that cannot be
+  recovered.**
+- **D4, futures legs, physical data, and the event calendar. Due 25 August 2026.**
+
+Then Phase 1, 25 August 2026 to 8 January 2027, is dormancy by design. Collection runs
+itself and the weekly platform exceptions check, 15 minutes, is the only touch. Phase 2,
+9 January to 6 February 2027, is the frozen window: nothing. Do not start work in either
+window. The build resumes in February 2027 with D5 and D6.
+
+## 3. Hard rules. SPEC Part H, restated in full
+
+These are not guidelines and they are not summarized here. Apply them mechanically.
+
+1. **Zero content from the prior employer, ever.** The employer is named in the master
+   specification and is deliberately not named anywhere in this repo, which is why you will
+   not find the name here or in `SPEC.md`. Nothing sourced from that employment enters this
+   project in any form: no data, no document, no figure, no recollected number, no
+   paraphrase. Where provenance is unclear, it is excluded and the exclusion is flagged,
+   not resolved by guessing.
+
+2. **`statarb.pricing` is imported, never reimplemented, never forked.** All option maths
+   and every Greek comes from the engine frozen 20 December 2026 in the relative value
+   project, imported at a pinned tag. Gaps become additive pull requests to that package
+   with the harness green, a tag bump, and a deliberate repin here. Not a local copy, not a
+   vendored file, not a quick private version to unblock something.
+
+3. **Raw settlement files are immutable. Fixes regenerate processed data from raw and
+   never edit raw.** Raw is checksummed and it is the record. Settlement tables are never
+   republished anywhere, in any artifact, public or private.
+
+4. **Point in time vintages.** WASDE and EIA figures as published on the day. Revised
+   history is lookahead and is refused. Not adjusted for, not caveated, refused.
+
+5. **The test set runs once.** A rerun request is flagged, requires explicit confirmation,
+   and every execution is logged.
+
+6. **Event timestamps are UTC internally.** `config/event_calendar.yaml` is the single
+   source of truth and daylight saving lives there and nowhere else. No module computes a
+   release timestamp, applies an offset, or hardcodes a session boundary.
+
+7. **Honest negatives ship.** An unharvestable volatility risk premium, unsupported skew
+   trading, a thin window: all of these ship as findings. The window honesty sentence
+   appears verbatim in every backtest note, written before the results are looked at.
+
+8. **WRDS: futures history block only**, academic use, never republished, never a daily
+   dependency. Splice dates recorded in the manifest.
+
+9. **Style: numerals, no hyphens in prose, no marketing language, no emojis, no conduct
+   language about any market participant.** Expanded in section 4 below.
+
+Additional standing constraints from Part K, which have the same force:
+
+- The data is the scarce asset. Protect the collection jobs above everything else in this
+  project, including analysis with a nearer deadline. Treat a manifest gap as the highest
+  priority incident.
+- The research first rule on skew is binding. See section 6.
+
+## 4. Style
+
+- Numerals, not words, for numbers. Write 3, not three.
+- No hyphens in prose. Code, CLI flags, file names, and kebab case identifiers keep the
+  hyphens they syntactically need.
+- No emojis. Anywhere, including commit messages.
+- No marketing language. Banned outright: leverage, comprehensive, robust, seamless,
+  holistic, streamline, supercharge, unlock, journey, paradigm, best in class, dive in,
+  delve.
+- No conduct language about any market participant.
+- Lead with the result. Limitations are a first class section, written before the results
+  section, not appended to it.
+
+## 5. The 3 refusal points
+
+If a task asks for 1 of these, stop and ask the user. Do not proceed, do not find a
+workaround, do not do it and mention it afterward. Say which refusal point was hit and
+what confirmation you need.
+
+1. **Reimplementing or forking a shared component instead of importing it.** This is Part
+   H rule 2 and it is the single most likely thing to go wrong in this repo, because a
+   missing Greek during a Saturday afternoon of work looks like a 20 line fix. It is not. A
+   local Black 76, a local delta, a copied Margrabe, a vendored `pricing.py`: all refusals.
+   The path is an additive pull request to the engine package.
+
+2. **Using revised or lookahead data vintages.** EIA and USDA figures as published on the
+   day. A revised inventory series in the skew research, or a restated storage number in
+   the event study, is lookahead. Refuse it; do not caveat it.
+
+3. **Rerunning a locked test set without explicit confirmation.** The D16 full book test
+   set runs once. The D9 HAR winner is frozen after the training window evaluation. The
+   D15 thresholds are frozen before the test. Any rerun is flagged, requires explicit
+   confirmation from the user, and is logged.
+
+## 6. Specific to this repo
+
+- **Raw is immutable.** `data/raw/` holds the collected settlement and option tool files.
+  Nothing rewrites them, ever. A bug in parsing is fixed by regenerating
+  `data/processed/` from raw under the new code. A bug in collection is fixed forward. A
+  raw file is never edited to make a downstream step work, and a bad raw file is retained
+  with its flag rather than deleted.
+- **D15, the skew trade layer, ships only if the D14 research supports it.** D14 is 3
+  layers: contemporaneous, lead and lag with the multiple testing caveat, and regime
+  dependence on the bottom quintile of stocks. The acceptance gate names layers 1 and 2
+  specifically. If the research does not support a tradable lead, the research note ships
+  alone and says so plainly, and that is success. Do not weaken a layer, extend a window,
+  or add a specification search to manufacture support for building D15.
+- **The pre committed cut order**, if the schedule compresses: D15 first, then D13. D12 the
+  event study and D10 the decomposition are protected because they carry the research
+  weight alone. Do not improvise a different cut.
+- **The 2026 crisis walkthrough in D16 is a required exhibit**, including where the book
+  loses. A short volatility book looking bad in a crisis is the designed content of that
+  section, not a problem to solve before writing it.
+
+## 7. Working habits in this repo
+
+- Read the config before the code. Release timings, costs, thresholds, and windows live in
+  `config/` and load through `vol_trading/utils`. A science module that opens a yaml
+  directly, or hardcodes a threshold or a timestamp, is a defect.
+- An entry in `config/event_calendar.yaml` marked `verified: false` does not feed a signal.
+  Flipping those flags is the D4 spot check. Do not invent an exception date to fill a gap.
+- Every backtest note carries the history window honesty sentence verbatim, written before
+  the results are looked at.
+- The 1x, 2x, 4x cost sensitivity table is mandatory in every backtest. If the Sharpe sign
+  flips between 1x and 2x, the strategy is labeled not robust to costs and excluded from
+  every headline, and the table ships regardless.
+- Python 3.11 or later, type hints on public functions, Polars and NumPy and statsmodels as
+  the default stack. Validate inputs and fail loudly.
+- Never commit or push unless the user asks.

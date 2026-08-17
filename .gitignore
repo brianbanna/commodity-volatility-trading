@@ -1,0 +1,53 @@
+# Data.
+# data/raw/ holds the collected settlement and option tool files. They are IMMUTABLE and
+# they are the only record: there is no free backfill for this data, so a lost raw file is
+# a permanently lost day. Never committed, never rewritten, never edited to fix anything.
+# data/processed/ is always regenerable from raw and is therefore disposable.
+/data/raw/*
+/data/processed/*
+!/data/raw/.gitkeep
+!/data/processed/.gitkeep
+
+# Settlement tables are never republished in any artifact. SPEC Part H rule 3.
+# These patterns are a backstop, not the control.
+*settlement*.csv
+*settlement*.parquet
+*chain*.parquet
+*surface*.parquet
+
+# WRDS. Futures history block only, academic use, never republished.
+/data/wrds/
+*_wrds.parquet
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Environment
+.venv/
+venv/
+.env
+.env.local
+
+# Secrets. Credentials are read from environment variables and never written to a file.
+secrets.yaml
+*.pem
+*.key
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.cursor/

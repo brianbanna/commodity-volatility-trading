@@ -1,0 +1,131 @@
+# event_calendar.yaml
+# SPEC Part D deliverable D4, governed by SPEC Part H rule 6.
+# Acceptance gate: spot checked against 3 known releases. That gate is NOT met yet.
+#
+# THIS FILE IS THE SINGLE SOURCE OF TRUTH FOR EVENT TIMING.
+#
+# Part H rule 6, in full: event timestamps are UTC internally, this calendar is the single
+# source of truth, and daylight saving lives here and nowhere else. What that means in
+# practice, and what the loader must enforce:
+#
+#   1. Every release is declared as a local wall clock time plus an IANA timezone
+#      identifier. The loader resolves that pair to UTC using the timezone database.
+#   2. No module anywhere in vol_trading computes a release timestamp, applies an offset,
+#      adds or subtracts hours for summer time, or hardcodes a session boundary. A
+#      hardcoded offset anywhere in the codebase is a defect, not a shortcut.
+#   3. A fixed numeric UTC offset never appears in this file either. Offsets are derived
+#      from the identifier, because the identifier is what survives a rule change.
+#   4. Everything downstream, the event study, the event trading backtest, the pre event
+#      exclusion window in the volatility risk premium backtest, reads its timing from here.
+#
+# STATUS OF THIS FILE: v0 scaffold. The recurring rules below carry the publication times
+# these agencies have used, entered so the schema is concrete, and every one is marked
+# `verified: false`. None of them feeds a signal until the D4 spot check confirms it
+# against 3 actual observed releases and flips the flag. Holiday shifts and the known
+# exception dates are empty on purpose: an invented exception date silently corrupts every
+# event window that reads this file.
+
+meta:
+  version: 0
+  deliverable: D4
+  status: scaffold
+  verified: false
+  internal_timezone: UTC
+  dst_policy: >
+    Local wall clock time plus an IANA identifier is the only accepted declaration.
+    Resolution to UTC happens in the loader, driven only by this file.
+
+# ---------------------------------------------------------------------------
+# Recurring scheduled releases.
+# ---------------------------------------------------------------------------
+releases:
+
+  eia_petroleum_status:
+    label: EIA Weekly Petroleum Status Report
+    markets: [CL]
+    recurrence:
+      rule: weekly
+      weekday: wednesday
+    local_time: "10:30"
+    timezone: America/New_York
+    verified: false
+    holiday_shift:
+      # A US federal holiday earlier in the week moves this release. The observed shift
+      # rule and the affected dates are a D4 research item. Empty until confirmed.
+      rule: UNVERIFIED
+      exceptions: []
+    conditional_split: [routine, report_heavy]
+    notes: >
+      Cushing stocks published in this release feed the D14 tightness measure. Vintages
+      are taken as published on the day. A revised figure is lookahead and is refused.
+
+  eia_natural_gas_storage:
+    label: EIA Weekly Natural Gas Storage Report
+    markets: [NG]
+    recurrence:
+      rule: weekly
+      weekday: thursday
+    local_time: "10:30"
+    timezone: America/New_York
+    verified: false
+    holiday_shift:
+      rule: UNVERIFIED
+      exceptions: []
+    conditional_split: [routine, report_heavy]
+    notes: >
+      Storage against norm and against pace feeds the D14 tightness measure for gas.
+
+  usda_wasde:
+    label: USDA World Agricultural Supply and Demand Estimates
+    markets: [ZC, ZS]
+    recurrence:
+      rule: monthly
+      # The published date within the month is not a fixed day number. The schedule is
+      # published by USDA in advance and is loaded as explicit dates, not derived.
+      day_rule: EXPLICIT_DATES_ONLY
+    local_time: "12:00"
+    timezone: America/New_York
+    verified: false
+    explicit_dates: []
+    conditional_split: [routine, report_heavy]
+    notes: >
+      Stocks to use from this release feeds the D14 tightness measure for ags. Vintages
+      as published only.
+
+# ---------------------------------------------------------------------------
+# Settlement times. The hedge simulator hedges daily at settlement, and the event trades
+# enter and exit at settlements, so these belong here for the same reason the releases do.
+# ---------------------------------------------------------------------------
+settlements:
+  cme_nymex:
+    markets: [CL, NG]
+    local_time: "14:30"
+    timezone: America/New_York
+    verified: false
+  cme_cbot_ags:
+    markets: [ZC, ZS]
+    local_time: "13:15"
+    timezone: America/Chicago
+    verified: false
+
+# ---------------------------------------------------------------------------
+# Windows derived from the entries above. Declared here so no module invents one.
+# ---------------------------------------------------------------------------
+windows:
+  short_volatility_pre_event_exclusion_days: 5   # SPEC Part G, applies to D11 entries
+  event_trade_entry: prior_settlement
+  event_trade_exit: post_release_settlement
+  realized_split:
+    # Which calendar days are stamped as event days, so the D8 ex event and event only
+    # series can be split. A day is an event day if it contains a release above.
+    method: release_day_membership
+
+# ---------------------------------------------------------------------------
+# The D4 acceptance gate. Filling this block is what flips `verified` to true.
+# ---------------------------------------------------------------------------
+spot_check:
+  required_releases: 3
+  status: not_started
+  checks: []
+  # Each check records: the release key, the observed publication timestamp in UTC, the
+  # source it was observed from, and whether the rule above reproduces it exactly.
