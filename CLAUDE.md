@@ -47,12 +47,25 @@ the skeleton, the calendar scaffold, and the spec. No data collected, no result 
   an actual reply arrives. The lab escalation path stays live if the quote lands above
   threshold. D1 has promoted this from a history upgrade to the project's primary data
   path; see below.
-- **The GCC clarification email. SENT.** Confirmed sent from `brian.banna@epfl.ch` to
-  `gcc@cmegroup.com`, recorded 17 August 2026. References the block encountered during D1
-  and the already sent DataMine request, and asks what the permitted route is. **This is a
-  clarification ask, not a new data path, and it is not to be described as one.** Outcome
-  pending: no reply, nothing granted. Do not record any outcome until an actual reply
-  arrives.
+- **The GCC clarification email. SENT, AND ANSWERED. Case 04698817, 17 August 2026.**
+  Sent from `brian.banna@epfl.ch` to `gcc@cmegroup.com`, referencing the block encountered
+  during D1 and the already sent DataMine request. **This was a clarification ask, not a
+  data path, and the answer does not make it one.** What CME said:
+    1. **DataMine is the only path.** Confirmed by the data owner directly.
+    2. The block was automated IP scraping detection, as D1 read it.
+    3. Dataset and pricing questions go to `cmedatasales@cmegroup.com`, not to GCC.
+    4. A student or higher education discount is likely to apply.
+
+  **This confirms section 3a of the D1 audit from the counterparty's own mouth: there is no
+  compliant automated alternative.** The audit reached that independently on 17 August and
+  CME's answer matches it exactly. Nothing in the D1 verdicts changes: still 0 PASS markets,
+  still CUT on all 4, still halted. A confirmation that the door is closed is not an opening.
+
+- **The CME Data Sales email. SENT.** Sent from `brian.banna@epfl.ch` to
+  `cmedatasales@cmegroup.com`, recorded 17 August 2026, following GCC's redirection.
+  References case 04698817 and asks specifically about the CME DataMine for Education
+  discount against the original 150 EUR budget request. **Outcome pending: no reply, no
+  quote, nothing granted.** Do not record any outcome until an actual reply arrives.
 - **D3, the daily collection jobs. BLOCKED, not started.** The design is scrapes of the
   settlement pages AND the option settlement tool, 2x daily. **D1 established on 17 August
   2026 that CME's Data Terms of Use prohibit automated retrieval, and the request returns
@@ -63,6 +76,22 @@ the skeleton, the calendar scaffold, and the spec. No data collected, no result 
   until either the DataMine reply or the GCC reply arrives AND Brian has decided how to
   proceed. Both conditions, not either.** A reply on its own does not release the halt. If
   you are asked to start collection work and neither has happened, say so and stop.
+
+  **THE HALT IS NOT LIFTED. Status of the 2 conditions:**
+
+  | Condition | Status |
+  |---|---|
+  | 1. A reply arrives | **SATISFIED.** The GCC reply, case 04698817, arrived 17 August 2026 |
+  | 2. Brian has decided how to proceed | **OPEN. Not made.** |
+
+  Condition 1 being satisfied changes nothing on its own; that is what the sentence above
+  means by both conditions and not either. **Brian's standing instruction, recorded here
+  verbatim so it is not paraphrased away: no collection code, no matter what these replies
+  say, until every open reply is in and he has made the actual decision on how project 3
+  proceeds.** Open replies as of now: CME DataMine (`marketdata@cmegroup.com`) and CME Data
+  Sales (`cmedatasales@cmegroup.com`). A favorable reply is not a decision, a discount quote
+  is not a decision, and neither is an instruction to start work that does not reference
+  the decision having been made.
 
   **Do not spend time searching for a free automated CME path. There is not one.** See
   section 6 of the D1 note. When a permitted path exists, the original gate applies: raw

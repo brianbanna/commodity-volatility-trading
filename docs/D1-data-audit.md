@@ -100,24 +100,45 @@ were not. The verdicts in section 2 stand as written.
    150 EUR threshold. Given section 3a this is not merely the primary path, it is the only
    licensed route to the specified data. Outcome pending; the lab escalation step stays
    live if the quote lands above threshold.
-2. **The GCC clarification ask, already sent.** Confirmed sent 17 August 2026 from
-   `brian.banna@epfl.ch` to `gcc@cmegroup.com`, the address CME's own 403 names, referencing
-   the block encountered here and the DataMine request. It asks what the permitted route is
-   for a supervised academic project at this scale. It is a clarification ask, not a data
-   path, and it is not treated as one anywhere in this repo. Outcome pending.
-3. **Re scope to a market whose options data is free under terms that permit automation.**
+2. **The GCC clarification ask. SENT AND ANSWERED, case 04698817, 17 August 2026.** Sent
+   from `brian.banna@epfl.ch` to `gcc@cmegroup.com`, the address CME's own 403 names.
+   CME's answer:
+
+   - **DataMine is the only path.** Stated by the data owner.
+   - The block was automated IP scraping detection, which is how section 1 read it.
+   - Dataset and pricing questions go to `cmedatasales@cmegroup.com`, not GCC.
+   - A student or higher education discount is likely to apply.
+
+   **This independently confirms section 3a.** That section was written on 17 August from
+   the shutdown of the free FTP site and the terms of use position, before any reply
+   arrived; CME's answer matches it exactly. The finding now rests on both the audit and the
+   counterparty's own statement, which is as settled as it gets. **No verdict in section 2
+   changes. A confirmation that the door is closed is not an opening.**
+
+3. **The CME Data Sales ask. SENT 17 August 2026, outcome pending.** From
+   `brian.banna@epfl.ch` to `cmedatasales@cmegroup.com`, following GCC's redirection,
+   referencing case 04698817. Asks specifically about the CME DataMine for Education
+   discount against the original 150 EUR budget request. No reply, no quote, nothing
+   granted. This is a pricing question about option 1, not a separate route.
+4. **Re scope to a market whose options data is free under terms that permit automation.**
    This is a real change to what the project is: SPEC Part A is built on CME commodity
    options specifically, and Part E already records that WRDS OptionMetrics covers equity
    and index options only and is NOT A FIX for CME commodity options.
-4. **Re scope to what the free data supports.** The EIA daily spot series verified in
+5. **Re scope to what the free data supports.** The EIA daily spot series verified in
    project 2's D1 note support realized volatility work, D8 and D9, and the underlying leg
    of the event study. They do not support anything involving an implied volatility or a
    surface, which is 3 of the project's 4 ranked goals.
 
-Options 1 and 2 preserve the project as specified. Options 3 and 4 change what it is. That
-is why this is an escalation and not a fallback: SPEC Part I has a pre committed fallback
-for the scraping breaking or shallowing, and it assumes the scraping path exists. It does
-not cover the path being prohibited.
+Options 1 to 3 preserve the project as specified and are 1 path, not 3: a licensed DataMine
+purchase, with the GCC exchange establishing that it is the only path and the Data Sales
+exchange establishing what it costs. Options 4 and 5 change what the project is. That is
+why this is an escalation and not a fallback: SPEC Part I has a pre committed fallback for
+the scraping breaking or shallowing, and it assumes the scraping path exists. It does not
+cover the path being prohibited.
+
+**The decision has not been made.** 2 replies are outstanding, DataMine and Data Sales, and
+the halt in CLAUDE.md stands until every open reply is in and Brian has decided. A discount
+quote is not a decision.
 
 ## 5. What was checked, and what was not
 
