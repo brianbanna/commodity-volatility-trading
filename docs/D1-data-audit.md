@@ -79,17 +79,32 @@ this project and that every collected day is owned history with no free backfill
 without a permitted collection path is a day permanently absent from every backtest window
 this project will ever run. That is the cost of the delay and it does not decrease.
 
+## 3a. There is no free automated CME path. Confirmed, and the search is closed.
+
+CME shut down its free FTP settlement site in 2023 and routed everything through DataMine,
+which is paid. Combined with section 1, the position is complete rather than partial:
+
+- the historical bulk route, the free FTP site, no longer exists,
+- the remaining route, the web pages and the settlements web service, is prohibited for
+  automated retrieval by the Data Terms of Use and is actively blocked.
+
+**No free automated path to CME settlement or option data exists. Do not spend further time
+searching for one.** This is recorded so the search is not silently repeated by a later
+session reading the CUT verdicts and assuming they were reached for want of looking. They
+were not. The verdicts in section 2 stand as written.
+
 ## 4. Options, for Brian's decision. None of these is chosen here.
 
 1. **The D2 DataMine request, already sent.** Confirmed sent 17 August 2026 from
    `brian.banna@epfl.ch` to `marketdata@cmegroup.com`, EPFL supervised research framing,
-   150 EUR threshold. This is now the primary path rather than the history upgrade it was
-   scoped as, because it is a licensed route to the same data. Outcome pending; the lab
-   escalation step stays live if the quote lands above threshold.
-2. **Contact the address CME's own 403 gives**, `gcc@cmegroup.com`, and ask directly what
-   the permitted route is for a supervised academic project at this scale. The block message
-   states CME has other delivery methods. This is a second, independent outward facing ask
-   and it is cheap.
+   150 EUR threshold. Given section 3a this is not merely the primary path, it is the only
+   licensed route to the specified data. Outcome pending; the lab escalation step stays
+   live if the quote lands above threshold.
+2. **The GCC clarification ask, already sent.** Confirmed sent 17 August 2026 from
+   `brian.banna@epfl.ch` to `gcc@cmegroup.com`, the address CME's own 403 names, referencing
+   the block encountered here and the DataMine request. It asks what the permitted route is
+   for a supervised academic project at this scale. It is a clarification ask, not a data
+   path, and it is not treated as one anywhere in this repo. Outcome pending.
 3. **Re scope to a market whose options data is free under terms that permit automation.**
    This is a real change to what the project is: SPEC Part A is built on CME commodity
    options specifically, and Part E already records that WRDS OptionMetrics covers equity

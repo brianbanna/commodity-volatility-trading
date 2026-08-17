@@ -47,15 +47,28 @@ the skeleton, the calendar scaffold, and the spec. No data collected, no result 
   an actual reply arrives. The lab escalation path stays live if the quote lands above
   threshold. D1 has promoted this from a history upgrade to the project's primary data
   path; see below.
+- **The GCC clarification email. SENT.** Confirmed sent from `brian.banna@epfl.ch` to
+  `gcc@cmegroup.com`, recorded 17 August 2026. References the block encountered during D1
+  and the already sent DataMine request, and asks what the permitted route is. **This is a
+  clarification ask, not a new data path, and it is not to be described as one.** Outcome
+  pending: no reply, nothing granted. Do not record any outcome until an actual reply
+  arrives.
 - **D3, the daily collection jobs. BLOCKED, not started.** The design is scrapes of the
   settlement pages AND the option settlement tool, 2x daily. **D1 established on 17 August
   2026 that CME's Data Terms of Use prohibit automated retrieval, and the request returns
   an explicit block. Do not build this job, and do not work around the block.** Read
   `docs/D1-data-audit.md` in full before touching anything in `vol_trading/collection/`.
-  When a permitted path exists, the original gate applies: raw files immutable and
-  checksummed, 7 consecutive clean days per market. Until then the history clock has not
-  started, and every day that passes is permanently absent from every backtest window this
-  project will ever run.
+
+  **THE HALT CONDITION, in force as of 17 August 2026: write no project 3 collection code
+  until either the DataMine reply or the GCC reply arrives AND Brian has decided how to
+  proceed. Both conditions, not either.** A reply on its own does not release the halt. If
+  you are asked to start collection work and neither has happened, say so and stop.
+
+  **Do not spend time searching for a free automated CME path. There is not one.** See
+  section 6 of the D1 note. When a permitted path exists, the original gate applies: raw
+  files immutable and checksummed, 7 consecutive clean days per market. Until then the
+  history clock has not started, and every day that passes is permanently absent from every
+  backtest window this project will ever run.
 - **D4, futures legs, physical data, and the event calendar. Due 25 August 2026.**
 
 Then Phase 1, 25 August 2026 to 8 January 2027, is dormancy by design. Collection runs
