@@ -29,23 +29,33 @@ the skeleton, the calendar scaffold, and the spec. No data collected, no result 
 
 **The next deliverables, in order:**
 
-- **D1, the data audit note. Due 17 August 2026, which is today.** Per market: the exact
-  retrieval method for the delayed settlement pages and for the option settlement tool,
-  the fields actually available, meaning settlement, implied volatility, open interest, and
-  volume per strike per expiry, the verified free history depth, license notes, and a
-  PASS or CUT verdict. 1 page per market. TTF options are confirmed DROPPED; gas volatility
-  is carried by Henry Hub. **Hard floor: a minimum of 2 PASS markets, WTI and 1 other. If
-  fewer than 2 pass, the project halts and escalates rather than proceeding on 1 market.**
-- **D2, the DataMine academic email.** Was due 12 August 2026, sent the same day as the
-  project 1 EPEX email. Confirm it went and that the outcome is logged before treating it
-  as done. Historical options end of day for the PASS products, EPFL supervised research
-  framing, 150 EUR threshold, lab escalation if quoted above. This is the highest leverage
-  single action in the project because no free backfill exists.
-- **D3, the daily collection jobs. Due 18 August 2026, tomorrow.** Scrapes of the
-  settlement pages AND the option settlement tool, 2x daily, platform scheduled, raw files
-  immutable and checksummed. Gate: 7 consecutive clean days per market. **From the day
-  this goes live, the history clock runs. Every day it is down is a day that cannot be
-  recovered.**
+- **D1, the data audit note. DELIVERED 17 August 2026. `docs/D1-data-audit.md`.**
+  **THE GATE FAILED: 0 PASS markets against a floor of 2. THE PROJECT IS HALTED AND
+  ESCALATED TO BRIAN.** WTI, Henry Hub, corn, and soybeans are all CUT for the same reason:
+  CME's Data Terms of Use prohibit automated retrieval of the settlement pages and the
+  settlements web service, and the request returns an explicit block saying so. TTF options
+  DROPPED, confirmed per amendment C10.
+  **Read that note before doing anything else in this repo.** Do not start a downstream
+  deliverable, do not build a collection job, and do not treat the failure as a fallback
+  case: SPEC Part I covers the scraping breaking or shallowing, and it assumes the path
+  exists. It does not cover the path being prohibited. The decision on how to proceed is
+  Brian's and has not been made.
+- **D2, the DataMine academic email. SENT.** Confirmed sent from `brian.banna@epfl.ch` to
+  `marketdata@cmegroup.com`, recorded 17 August 2026, spec target date 12 August 2026.
+  Historical options end of day, EPFL supervised research framing, 150 EUR threshold.
+  **Outcome pending: no reply, no quote, nothing granted.** Do not record any outcome until
+  an actual reply arrives. The lab escalation path stays live if the quote lands above
+  threshold. D1 has promoted this from a history upgrade to the project's primary data
+  path; see below.
+- **D3, the daily collection jobs. BLOCKED, not started.** The design is scrapes of the
+  settlement pages AND the option settlement tool, 2x daily. **D1 established on 17 August
+  2026 that CME's Data Terms of Use prohibit automated retrieval, and the request returns
+  an explicit block. Do not build this job, and do not work around the block.** Read
+  `docs/D1-data-audit.md` in full before touching anything in `vol_trading/collection/`.
+  When a permitted path exists, the original gate applies: raw files immutable and
+  checksummed, 7 consecutive clean days per market. Until then the history clock has not
+  started, and every day that passes is permanently absent from every backtest window this
+  project will ever run.
 - **D4, futures legs, physical data, and the event calendar. Due 25 August 2026.**
 
 Then Phase 1, 25 August 2026 to 8 January 2027, is dormancy by design. Collection runs
