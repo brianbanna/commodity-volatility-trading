@@ -3,6 +3,9 @@
 You are in a public repo. Read this file completely before your first tool call, then read
 `SPEC.md`. If you are about to write code and you have not read `SPEC.md`, stop and read it.
 
+Read `SCOPE-LOCK.md` next, before anything else in this file. It is the current state;
+sections below are history that led to it.
+
 ---
 
 ## 1. SPEC.md is the build authority
