@@ -10,7 +10,7 @@ superseded narrative, not reopened.
 | What | Checked | Reason closed | What would reopen it |
 |---|---|---|---|
 | CME web pages and settlements web service, free automated access | 17 August 2026 | HTTP 403 with a body stating automated retrieval is prohibited by CME's Data Terms of Use. The free FTP settlement site was separately confirmed shut down in 2023. `docs/D1-data-audit.md` sections 1 and 3a | Only if Brian requests, and receives, written permission from CME. Not requested |
-| CME DataMine, the paid route | 18 August 2026 | CME Data Sales quoted 43 USD per instrument per month standard, 426 USD per asset class per month basic, 50 percent academic discount both. Declined on zero budget. `docs/D1-data-audit.md` section 7.1 | Only if Brian secures budget for this specific line item. Not a data question; a budget decision, his to make |
+| CME DataMine, the Standard purchase | 19 August 2026, final. CME Data Sales, Joaquin Morales, answered every outstanding pricing question | 43 USD 1 time historical extract, full options chain, all strikes and expiries, for the requested date range; approximately 21.50 USD with the 50 percent academic discount. Basic and Basic Plus confirmed settlement only, no per strike implied volatility or delta, no dedicated WTI feed, historical extracts still cost on the free tiers: no free path exists anywhere in CME's tier structure. Brian declines at any price point discussed. `docs/D1-data-audit.md` section 12 | **Only if Brian explicitly raises it again.** Not budget dependent: this is a final decision, not a constraint that lifts if money becomes available. Do not infer a reopening from silence or from the passage of time |
 | Euronext, all pages, options and futures alike | 18 August 2026, Track B verification spike, time boxed 1 day, stopped at step 1 | Terms of Use prohibit "spiders, robots, avatars, agents, tools" without prior written permission, and separately prohibit systematic retrieval to build collections or databases, in language structurally identical to CME's. `docs/D1-data-audit.md` section 9 | Only if Brian requests written permission from Euronext's Legal Department, Copyright Agent, the address the terms page itself names. Not requested. Steps 2 to 5 of the spike, robots.txt, reachability, liquidity, the futures leg, were never performed and remain unperformed; do not check them as a way around step 1 |
 | EIA STEO `probability_WTI.xlsx` and `probability_HH.xlsx` | 18 August 2026, checked cell by cell with openpyxl | Both are broken S&P Capital IQ plugin templates; every data cell that should carry a futures price, implied volatility, or days to expiration caches as `#N/A`. Cross checked against EIA's full 28 table STEO master workbook, which contains no volatility or probability table at all. `docs/D1-data-audit.md` section 8.2 | Only if EIA republishes a working version of these templates with the Capital IQ values actually resolved. If that happens, it needs independent re-verification, since the current publication pipeline for this specific product is established as unreliable, not merely stale |
 
@@ -34,15 +34,19 @@ not the instrument itself.
 | CL futures, continuous | Unverified. Shared need with the relative value project, neither side verified as of 18 August 2026. See `docs/D1-data-audit.md` section 11 | Whichever project resolves this first, the other should read that project's own D1 note before re-investigating | Not currently blocking; this project's WTI work runs on OVX and EIA spot regardless |
 | ZS, soybean futures | Unverified. Shared need with the relative value project's crush basket, its designated near certain anchor. See `docs/D1-data-audit.md` section 11 | Same as above | Not currently blocking; soybean event work has not started |
 | ZC, corn futures | Unverified. Single identified consumer, this project, as of 18 August 2026. See `docs/D1-data-audit.md` section 11 | No free daily source has been checked for it | Not currently blocking; WASDE event work has not started |
-| A general chain source, any exchange | No candidate identified. CME and Euronext both closed | An unidentified compliant exchange, or a future licensed purchase Brian chooses to fund | **Blocks D5 to D7, D13 to D15 indefinitely, no date attached**, since no candidate source exists to put a date against |
+| A general chain source, any exchange | No candidate identified. CME is permanently closed, both on terms of use and on price, see the Permanently closed table. Euronext is closed on terms of use | An unidentified compliant exchange, elsewhere: CME specifically is not reopening. Or Brian explicitly raising the CME purchase question again, his call, not inferred | **Blocks D5 to D7, D13 to D15 indefinitely, no date attached**, since no candidate source exists to put a date against |
 
 ## What this project can currently claim
 
-As of 18 August 2026, this project measures a proxy for WTI implied volatility, CBOE's OVX
+As of 19 August 2026, this project measures a proxy for WTI implied volatility, CBOE's OVX
 computed from options on the USO ETF, not from CME WTI futures options directly, alongside
-EIA realized volatility data, and prices everything through `statarb.pricing`. It does not
-have, and currently has no path to, real option chain data from any exchange: CME is closed
-on terms of use and on price, Euronext is closed on terms of use. This supports realized
+EIA realized volatility data, and prices everything through `statarb.pricing`. **This is the
+project's permanent data foundation, not an interim state pending a future CME purchase.**
+Brian declined the CME DataMine Standard purchase permanently on 19 August 2026, at every
+price point discussed, a final decision rather than a budget constraint that might lift
+later. It does not have, and has no path to, real option chain data from any exchange: CME
+is closed on terms of use and on price, permanently, Euronext is closed on terms of use.
+This supports realized
 volatility and HAR forecasting in full, and supports a proxy version of variance risk
 premium harvesting and event volatility work, explicitly distinguished from a backtest
 against real quoted markets. It does not support event trading, D13, or skew research and
@@ -57,7 +61,7 @@ this file describes what is buildable, not what has been built.
 ## Next deliverable
 
 **D4, futures legs, physical data, and the event calendar, due 25 August 2026.** D1, the
-audit, and its revision are delivered. D2 and D3, the DataMine and GCC emails, are sent and
-answered; the CME Data Sales pricing ask is sent, outcome pending, and does not gate D4. D4
-proceeds on the sources listed above as currently verified or open; no collection code has
-been written for any of them as of this lock.
+audit, and its revision, are delivered. D2, D3, and the CME Data Sales pricing ask are all
+sent and answered; the pricing question is closed permanently as of 19 August 2026 and does
+not gate D4. D4 proceeds on the sources listed above as currently verified or open; no
+collection code has been written for any of them as of this lock.

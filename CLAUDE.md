@@ -137,6 +137,24 @@ the skeleton, the calendar scaffold, and the spec. No data collected, no result 
   files immutable and checksummed, 7 consecutive clean days per market. Until then the
   history clock has not started, and every day that passes is permanently absent from every
   backtest window this project will ever run.
+
+  **19 August 2026: the CME purchase question is closed permanently.** The "outcome
+  pending" language on the D2 and CME Data Sales bullets above is superseded, not edited in
+  place; those threads are answered and closed. CME Data Sales, Joaquin Morales, confirmed:
+  the 43 USD Standard purchase is a 1 time historical extract, not a monthly charge as the
+  18 August pricing note above implied; 1 instrument covers the full options chain, all
+  strikes and expiries, for the requested range; the 50 percent academic discount applies to
+  Standard and Premium, roughly 21.50 USD; Basic and Basic Plus are settlement only, no per
+  strike implied volatility or delta, no dedicated WTI feed, and free tier historical
+  extracts still cost money. **No free path exists anywhere in CME's tier structure,
+  confirmed directly by CME's data sales team.**
+
+  **Brian declines the purchase, at every price point discussed. This is final, not a
+  budget constraint that might lift later.** Track A above, CBOE OVX via FRED, the EIA
+  daily spot series, and `statarb.pricing`, is this project's permanent data foundation,
+  not a placeholder awaiting a future purchase. See `docs/D1-data-audit.md` section 12.
+  **Do not reopen this question in a future session.** A budget change does not reopen it;
+  only Brian explicitly raising it again does.
 - **D4, futures legs, physical data, and the event calendar. Due 25 August 2026.**
 
 Then Phase 1, 25 August 2026 to 8 January 2027, is dormancy by design. Collection runs

@@ -456,3 +456,64 @@ to write this section.
 None of these gaps were resolved by the platform repo's retirement; they were unresolved
 before and remain unresolved after, now tracked in this project's own note rather than in a
 shared config file.
+
+---
+
+## 12. Final closure, 19 August 2026: the CME purchase question is closed permanently
+
+**This section closes the CME Data Sales question raised in section 4 and answered in part
+in section 7.1. Nothing in sections 1 to 11 is edited. Where this section adds detail that
+refines how section 7.1's pricing should be read, that refinement is stated explicitly
+below rather than silently overwriting the earlier text.**
+
+### 12.1 CME Data Sales answered every outstanding pricing question
+
+CME Data Sales, Joaquin Morales, answered the outstanding questions from the `cmedatasales
+@cmegroup.com` thread referenced in section 4 point 3 and section 7.1. The full picture:
+
+- **The 43 USD Standard purchase is a 1 time historical extract, not a recurring charge.**
+  Section 7.1 recorded this figure as "43 USD per instrument per month standard," which read
+  as a monthly subscription. For the specific need this project has, a historical extract
+  for a stated date range, it is a single 1 time purchase at that price, not a recurring
+  monthly cost. This is a refinement of section 7.1's framing, not a contradiction of the
+  number itself.
+- **1 instrument covers the full options chain**, all strikes and all expiries, for the
+  requested date range. Not 1 strike, not 1 expiry: the complete chain for that instrument
+  over that window.
+- **The 50 percent academic discount applies to Standard and to Premium.** Applied to the
+  43 USD Standard price, this brings the 1 time extract to approximately 21.50 USD.
+- **The free tier question is closed.** Basic and Basic Plus are confirmed settlement only:
+  no per strike implied volatility, no per strike delta. Neither carries a dedicated WTI
+  feed; WTI is bundled into a general NYMEX or Energy dataset rather than offered on its
+  own. Historical extracts on the free tiers still carry a cost. **There is no free path to
+  CME chain data anywhere in CME's own tier structure, confirmed directly by CME's data
+  sales team, not inferred from the terms of use finding in section 1 alone.** The terms of
+  use prohibition and this pricing confirmation are 2 independent findings that reach the
+  same conclusion from 2 different directions.
+
+### 12.2 Decision: declined, permanently, at every price point discussed
+
+**Brian declines the CME DataMine Standard purchase, at any price point discussed: 43 USD
+full price, or approximately 21.50 USD with the academic discount.**
+
+**This is a final decision, not a budget constraint that might lift later.** Section 7.1
+framed the 17 to 18 August decline as a consequence of zero budget, which was accurate as
+far as it went but left open the implication that a future budget change would reopen the
+question. It will not. Track A, section 8, as already built, meaning CBOE OVX via FRED, the
+EIA daily spot series, and `statarb.pricing`, is this project's permanent data foundation,
+not a placeholder awaiting a future purchase. The scope finding in section 10, 3 of 4 ranked
+goals supported, stands as the project's actual scope, not an interim state pending a
+purchase decision.
+
+This also closes the D2 DataMine research request from section 4 point 1, sent to
+`marketdata@cmegroup.com`. Section 4 point 3 already established that the Data Sales
+question is a pricing question about that same request, not a separate route; Data Sales'
+answer above is the answer to D2 as well. Nothing further is expected from that address.
+
+**Do not reopen this question in a future session.** If Brian's financial situation changes
+and he wants to revisit a CME purchase, that is a new decision he raises explicitly, stating
+that he is reopening it, not something a future session infers from silence, from a stale
+budget line elsewhere in this repo, or from the passage of time. The terms of use finding in
+section 1 and the Euronext finding in section 9 remain independently sufficient reasons this
+project has no chain data; the purchase decision in this section is additional and final on
+its own terms.

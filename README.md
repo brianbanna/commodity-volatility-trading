@@ -14,21 +14,27 @@ reading anything else here.**
 
 ## Status
 
-**In progress. The data plan changed on 18 August 2026.** D1, the data audit, found the CME
-options market this project was designed around inaccessible on any free or affordable
-basis. A revised plan, Track A, was verified the same day and covers realized volatility,
-variance risk premium harvesting, and event volatility as proxy or modified strategies, on
-different underlyings than originally specified. A parallel check, Track B, tried to
-recover full chain access through Euronext and found it equally closed. No data has been
+**In progress. The data plan changed on 18 August 2026 and was finalized on 19 August
+2026.** D1, the data audit, found the CME options market this project was designed around
+inaccessible on any free or affordable basis. A revised plan, Track A, was verified 18
+August 2026 and covers realized volatility, variance risk premium harvesting, and event
+volatility as proxy or modified strategies, on different underlyings than originally
+specified. A parallel check, Track B, tried to recover full chain access through Euronext
+and found it equally closed. On 19 August 2026, CME's own data sales team confirmed there is
+no free path anywhere in its tier structure and Brian declined the paid purchase
+permanently, at every price point discussed. **Track A is this project's actual and final
+data foundation, not an interim plan awaiting a possible future purchase.** No data has been
 collected and no result exists; this is a data plan decision, not a backtest result.
 
 **The data constraint, stated plainly.** This project covers 3 of its 4 ranked goals, not
 4, because the fourth, skew against physical tightness, needs a strike chain with open
 interest and volume per strike, and no compliant source for that exists. CME's Data Terms
-of Use prohibit automated retrieval and the paid DataMine alternative was declined on
-budget. Euronext's Terms of Use, checked as an alternative, prohibit the same thing in
-materially the same words. Full detail, including the exact clauses read from each
-exchange's own terms page, is in `docs/D1-data-audit.md`.
+of Use prohibit automated retrieval, and the paid DataMine alternative was priced,
+confirmed in full by CME's own data sales team, and declined permanently on 19 August 2026,
+not a budget gap that might close later. Euronext's Terms of Use, checked as an alternative,
+prohibit the same thing in materially the same words. Full detail, including the exact
+clauses read from each exchange's own terms page and the full pricing confirmation, is in
+`docs/D1-data-audit.md`.
 
 What this means concretely: the volatility risk premium and event volatility strategies run
 on CBOE's OVX index, sourced via FRED, as a documented proxy for WTI implied volatility,
@@ -68,12 +74,14 @@ unintended.
 ## The data is the scarce asset
 
 This was true of the CME chain data this project was originally designed around and it
-remains true structurally, even though that specific data is now out of reach. The CME
-delayed settlement pages carry the top day only and are overwritten, there is no free
+remains true structurally, even though that specific data is permanently out of reach. The
+CME delayed settlement pages carry the top day only and are overwritten, there is no free
 backfill for them, and there never was: CME's Data Terms of Use prohibit automated
-retrieval outright, and the paid DataMine route was checked, priced, and declined on
-budget on 18 August 2026. Euronext, checked the same day as a possible alternative, is
-prohibited on the same grounds.
+retrieval outright, and the paid DataMine route was checked, priced in full by CME's own
+data sales team, and declined permanently on 19 August 2026, at every price point
+discussed, a final decision rather than a budget constraint that might lift later.
+Euronext, checked 18 August 2026 as a possible alternative, is prohibited on the same
+grounds.
 
 For the data this project does use, the discipline is unchanged. Collection outranks every
 other task in this repo, a manifest gap is the highest priority incident, and `data/raw/`
