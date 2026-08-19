@@ -8,23 +8,46 @@ Trading how much prices move, 3 ways, as 1 book.
 > hedging, event volatility around EIA and WASDE prints, and skew against physical
 > inventory data, all running on the same pricing engine as my relative value book.
 
-That sentence is the target, not a current claim. Nothing in it is quotable with numbers
-until the artifact behind it passes its acceptance gate.
+That sentence is the target, not a current claim, and as of 18 August 2026 it is not fully
+reachable. **The data constraint below changes what this project can claim; read it before
+reading anything else here.**
 
 ## Status
 
-**In progress. Build starts 17 August 2026** with D1, the data audit note, and D2, the
-DataMine academic email, followed by D3, the daily collection jobs, on 18 August. As of 17
-August 2026 the repo holds the skeleton, the calendar scaffold, and the specification. No
-data has been collected and no result exists.
+**In progress. The data plan changed on 18 August 2026.** D1, the data audit, found the CME
+options market this project was designed around inaccessible on any free or affordable
+basis. A revised plan, Track A, was verified the same day and covers realized volatility,
+variance risk premium harvesting, and event volatility as proxy or modified strategies, on
+different underlyings than originally specified. A parallel check, Track B, tried to
+recover full chain access through Euronext and found it equally closed. No data has been
+collected and no result exists; this is a data plan decision, not a backtest result.
 
-Definition of done, from SPEC Part J:
+**The data constraint, stated plainly.** This project covers 3 of its 4 ranked goals, not
+4, because the fourth, skew against physical tightness, needs a strike chain with open
+interest and volume per strike, and no compliant source for that exists. CME's Data Terms
+of Use prohibit automated retrieval and the paid DataMine alternative was declined on
+budget. Euronext's Terms of Use, checked as an alternative, prohibit the same thing in
+materially the same words. Full detail, including the exact clauses read from each
+exchange's own terms page, is in `docs/D1-data-audit.md`.
 
-- Minimum viable, June 2027: D1 to D12, collection running since August, surfaces built,
-  realized volatility and the HAR forecast evaluated, the hedge simulator with its
-  decomposition verified, the volatility risk premium backtest with its stated window, and
-  the standalone event study.
-- Full, August 2027: D13 to D17.
+What this means concretely: the volatility risk premium and event volatility strategies run
+on CBOE's OVX index, sourced via FRED, as a documented proxy for WTI implied volatility,
+rather than against real CME option settlement prices. OVX is computed from options on the
+USO ETF, not from CME WTI futures options, and every figure built on it says so. The skew
+layer, D14 and D15, is dropped entirely: not because the research did not support a trade,
+which is the outcome the spec's own research first rule anticipated, but because the
+research could not run at all for lack of a chain to run it on. Those are 2 different
+findings and this project does not present 1 as the other.
+
+Definition of done, revised from SPEC Part J to match what is currently reachable:
+
+- Minimum viable: D1 to D12 in modified form, meaning realized volatility and the HAR
+  forecast on real EIA data, the variance risk premium and event volatility strategies on
+  the OVX proxy, and the P&L decomposition through `statarb.pricing` demonstrating the
+  mechanics rather than reconciling against real market hedge fills.
+- D5 to D7, D13 to D15 are out of scope on current data. D16 and D17, the full book run and
+  the site update, proceed on whatever of D1 to D12 is actually built, with the scope
+  limitation stated in the book note rather than left for a reader to discover.
 
 ## The shared pricing engine is a hard dependency
 
@@ -44,13 +67,21 @@ unintended.
 
 ## The data is the scarce asset
 
-There is no free backfill for the settlement data this project runs on. The CME delayed
-settlement pages carry the top day only and are overwritten, so every collected day is
-owned history and a missed day is permanently missing. Collection outranks every other
-task in this repo. A manifest gap is the highest priority incident here.
+This was true of the CME chain data this project was originally designed around and it
+remains true structurally, even though that specific data is now out of reach. The CME
+delayed settlement pages carry the top day only and are overwritten, there is no free
+backfill for them, and there never was: CME's Data Terms of Use prohibit automated
+retrieval outright, and the paid DataMine route was checked, priced, and declined on
+budget on 18 August 2026. Euronext, checked the same day as a possible alternative, is
+prohibited on the same grounds.
 
-That is also why `data/raw/` is immutable: a fix regenerates processed data from raw and
-never edits raw.
+For the data this project does use, the discipline is unchanged. Collection outranks every
+other task in this repo, a manifest gap is the highest priority incident, and `data/raw/`
+is immutable: a fix regenerates processed data from raw and never edits raw. The EIA daily
+spot series this project draws on is not collected here at all; it is imported from
+`commodity-data-platform`, which already collects it for the relative value project, so it
+is ingested once rather than twice, including the 4 business day publication lag rule
+recorded there.
 
 ## Layout
 
@@ -80,11 +111,20 @@ pre committed fallbacks, and the definition of done. Read it before writing code
 
 ## Data sources
 
-CME delayed settlement pages and the CME option settlement tool for daily chains and
-implied volatilities, free futures aggregators for the underlying legs, EIA for petroleum
-and gas storage and Cushing and utilization, USDA for the WASDE schedule and stocks to
-use, AGSI+ for EU storage context. Full register with verdicts in SPEC Part E. Settlement
-tables are never republished in any artifact.
+**As specified in SPEC Part E**, and now superseded in part: CME delayed settlement pages
+and the CME option settlement tool for daily chains and implied volatilities, free futures
+aggregators for the underlying legs, EIA for petroleum and gas storage and Cushing and
+utilization, USDA for the WASDE schedule and stocks to use, AGSI+ for EU storage context.
+Settlement tables are never republished in any artifact.
+
+**As actually verified, 18 August 2026**: CBOE's OVX crude oil implied volatility index,
+sourced via FRED series OVXCLS with attribution to both CBOE and FRED, project local to
+this repo; EIA daily petroleum and natural gas spot data, imported from
+`commodity-data-platform` rather than collected here; EIA weekly petroleum and gas storage
+reports and USDA's WASDE schedule, both government data unaffected by the CME or Euronext
+findings. CME chain data and Euronext chain and futures data are both prohibited under
+their respective terms of use; see `docs/D1-data-audit.md` for the full record with
+verbatim clauses.
 
 ## License
 

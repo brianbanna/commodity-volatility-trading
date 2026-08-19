@@ -88,10 +88,45 @@ the skeleton, the calendar scaffold, and the spec. No data collected, no result 
   means by both conditions and not either. **Brian's standing instruction, recorded here
   verbatim so it is not paraphrased away: no collection code, no matter what these replies
   say, until every open reply is in and he has made the actual decision on how project 3
-  proceeds.** Open replies as of now: CME DataMine (`marketdata@cmegroup.com`) and CME Data
-  Sales (`cmedatasales@cmegroup.com`). A favorable reply is not a decision, a discount quote
-  is not a decision, and neither is an instruction to start work that does not reference
-  the decision having been made.
+  proceeds.** A favorable reply is not a decision, a discount quote is not a decision, and
+  neither is an instruction to start work that does not reference the decision having been
+  made.
+
+  **18 August 2026: CONDITION 2 IS NOW SATISFIED. The decision has been made.**
+
+  | Condition | Status |
+  |---|---|
+  | 1. A reply arrives | SATISFIED, 17 August 2026 |
+  | 2. Brian has decided how to proceed | **SATISFIED, 18 August 2026** |
+
+  CME Data Sales replied with pricing: 43 USD per instrument per month standard, 426 USD
+  per asset class per month basic, 50 percent academic discount both. **Decision: declined,
+  on zero budget.** This closes the CME route entirely, not just the free automated one:
+  not unavailable, not unauthorized, unaffordable. See `docs/D1-data-audit.md` section 7.
+
+  **The decision that replaces the halted CME route is Track A**, verified 18 August 2026:
+  CBOE OVX via FRED as a documented proxy for WTI implied volatility, the EIA daily spot
+  series already verified for the relative value project and now shared through
+  `commodity-data-platform`, and `statarb.pricing` for every option value and Greek, same
+  as always. **Track B, a Euronext verification spike for a possible chain source, was
+  checked the same day and failed at the terms of use step**, on a prohibition
+  structurally identical to CME's. See `docs/D1-data-audit.md` sections 7 through 10 for
+  the full record, and section 10 specifically for what Track A does and does not support:
+  3 of the 4 ranked goals, in proxy or modified form, none of the chain dependent work.
+
+  **What this does NOT do: it does not authorize collection code in this session.** The
+  session that made this decision was scoped to verification, routing, and scope only, and
+  no ingestion job for OVX or anything else was written under it. The halt as originally
+  written, no collection code until the reply and the decision both land, is satisfied. A
+  future session building the OVX ingest job or wiring the platform import should read this
+  entry and `docs/D1-data-audit.md` sections 7 to 10 as its starting brief, not treat
+  D1 to D3 above as still open questions: they are answered, and what remains is
+  implementation, not decision.
+
+  **The CME and Euronext prohibitions are permanent findings, not part of what got
+  decided.** No future session reopens either search. Both are recorded identically in
+  `commodity-data-platform/config/sources.yaml` under `rejected`, so this is not the only
+  place that record lives.
 
   **Do not spend time searching for a free automated CME path. There is not one.** See
   section 6 of the D1 note. When a permitted path exists, the original gate applies: raw
@@ -200,6 +235,22 @@ what confirmation you need.
   specifically. If the research does not support a tradable lead, the research note ships
   alone and says so plainly, and that is success. Do not weaken a layer, extend a window,
   or add a specification search to manufacture support for building D15.
+- **As of 18 August 2026, D5 to D7, D14, and D15 are dropped for a data reason, not a
+  research reason, and these are 2 different findings.** D14 cannot run without a strike
+  chain; Track A supplies no chain, and Track B, the Euronext verification spike, found the
+  only candidate chain source prohibited under terms of use structurally identical to
+  CME's. The distinction matters: D14 finding no support after running is a research
+  negative and ships as 1; D14 never running because no chain data exists is a data gap and
+  ships as that instead. Do not blur the 2 into 1 sentence. `docs/D1-data-audit.md` section
+  10.3 states this in full. If a future chain source is identified and verified, this
+  reopens as originally specified; nothing about the research first rule changes.
+- **D11, the VRP backtest, and D12, the event study, run in modified form.** D11 as
+  literally specified enters and exits a real straddle against real settlement prices,
+  which needs a chain. Without one, it is a level based proxy using CBOE OVX as the implied
+  input and `statarb.pricing` for theoretical valuation, not a backtest against quoted
+  markets, and every output says so. D12 substitutes OVX for the spec's literal spanning
+  straddle priced move. Both substitutions are recorded, not silent; see the D1 note
+  section 10.1.
 - **The pre committed cut order**, if the schedule compresses: D15 first, then D13. D12 the
   event study and D10 the decomposition are protected because they carry the research
   weight alone. Do not improvise a different cut.
@@ -212,6 +263,14 @@ what confirmation you need.
 - Read the config before the code. Release timings, costs, thresholds, and windows live in
   `config/` and load through `vol_trading/utils`. A science module that opens a yaml
   directly, or hardcodes a threshold or a timestamp, is a defect.
+- **The EIA daily spot series, `wti_cushing` and `henry_hub`, is imported from
+  `commodity-data-platform`, never re-ingested here.** That includes the 4 business day
+  publication lag rule: it is applied as recorded in the platform repo's
+  `config/sources.yaml`, not re-derived locally. `vol_trading/collection/` and
+  `vol_trading/realized/` read this through the platform import; a local scraper for the
+  same series is the same class of error as reimplementing a shared pricing component and
+  is a refusal point, not a shortcut. CBOE OVX is the 1 verified source that stays local:
+  a single consumer, project 3 only, ingested here directly.
 - An entry in `config/event_calendar.yaml` marked `verified: false` does not feed a signal.
   Flipping those flags is the D4 spot check. Do not invent an exception date to fill a gap.
 - Every backtest note carries the history window honesty sentence verbatim, written before
