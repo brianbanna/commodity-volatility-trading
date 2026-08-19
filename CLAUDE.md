@@ -109,9 +109,11 @@ the skeleton, the calendar scaffold, and the spec. No data collected, no result 
 
   **The decision that replaces the halted CME route is Track A**, verified 18 August 2026:
   CBOE OVX via FRED as a documented proxy for WTI implied volatility, the EIA daily spot
-  series already verified for the relative value project and now shared through
-  `commodity-data-platform`, and `statarb.pricing` for every option value and Greek, same
-  as always. **Track B, a Euronext verification spike for a possible chain source, was
+  series already verified for the relative value project and now held here as this
+  project's own copy of that finding (`docs/D1-data-audit.md` section 8.3, since the
+  shared platform repo that briefly carried this finding was retired 18 August 2026), and
+  `statarb.pricing` for every option value and Greek, same as always. **Track B, a
+  Euronext verification spike for a possible chain source, was
   checked the same day and failed at the terms of use step**, on a prohibition
   structurally identical to CME's. See `docs/D1-data-audit.md` sections 7 through 10 for
   the full record, and section 10 specifically for what Track A does and does not support:
@@ -121,15 +123,14 @@ the skeleton, the calendar scaffold, and the spec. No data collected, no result 
   session that made this decision was scoped to verification, routing, and scope only, and
   no ingestion job for OVX or anything else was written under it. The halt as originally
   written, no collection code until the reply and the decision both land, is satisfied. A
-  future session building the OVX ingest job or wiring the platform import should read this
-  entry and `docs/D1-data-audit.md` sections 7 to 10 as its starting brief, not treat
-  D1 to D3 above as still open questions: they are answered, and what remains is
-  implementation, not decision.
+  future session building the OVX ingest job or the EIA import should read this entry and
+  `docs/D1-data-audit.md` sections 7 to 11 as its starting brief, not treat D1 to D3 above
+  as still open questions: they are answered, and what remains is implementation, not
+  decision.
 
   **The CME and Euronext prohibitions are permanent findings, not part of what got
-  decided.** No future session reopens either search. Both are recorded identically in
-  `commodity-data-platform/config/sources.yaml` under `rejected`, so this is not the only
-  place that record lives.
+  decided.** No future session reopens either search. Both are recorded here, with the
+  exact clauses, in `docs/D1-data-audit.md` sections 1, 3a, and 9.
 
   **Do not spend time searching for a free automated CME path. There is not one.** See
   section 6 of the D1 note. When a permitted path exists, the original gate applies: raw
@@ -266,14 +267,12 @@ what confirmation you need.
 - Read the config before the code. Release timings, costs, thresholds, and windows live in
   `config/` and load through `vol_trading/utils`. A science module that opens a yaml
   directly, or hardcodes a threshold or a timestamp, is a defect.
-- **The EIA daily spot series, `wti_cushing` and `henry_hub`, is imported from
-  `commodity-data-platform`, never re-ingested here.** That includes the 4 business day
-  publication lag rule: it is applied as recorded in the platform repo's
-  `config/sources.yaml`, not re-derived locally. `vol_trading/collection/` and
-  `vol_trading/realized/` read this through the platform import; a local scraper for the
-  same series is the same class of error as reimplementing a shared pricing component and
-  is a refusal point, not a shortcut. CBOE OVX is the 1 verified source that stays local:
-  a single consumer, project 3 only, ingested here directly.
+- **The EIA daily spot series, `wti_cushing` and `henry_hub`, is ingested here directly, as
+  of 18 August 2026.** It was originally verified in the relative value project's D1 audit,
+  17 August 2026, and briefly shared through a platform repo retired 18 August 2026; see
+  `docs/D1-data-audit.md` section 8.3 for the full copied finding. The 4 business day
+  publication lag rule applies exactly as recorded there, not a weaker or re-derived
+  version. CBOE OVX is also project local, single consumer.
 - An entry in `config/event_calendar.yaml` marked `verified: false` does not feed a signal.
   Flipping those flags is the D4 spot check. Do not invent an exception date to fill a gap.
 - Every backtest note carries the history window honesty sentence verbatim, written before

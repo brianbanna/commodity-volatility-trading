@@ -18,8 +18,8 @@ superseded narrative, not reopened.
 
 | Source | Covers | License, 1 line | Local or imported |
 |---|---|---|---|
-| CBOE OVX, series OVXCLS | Implied volatility proxy for WTI, feeding D11 VRP and D12 event study | CBOE copyright, "reprinted with permission" on FRED; personal non-commercial use with citation is established, anything beyond that needs CBOE permission per FRED's own guidance, treated conservatively here | **Project local.** Single consumer; not routed through the platform repo |
-| EIA daily spot: `wti_cushing`, `henry_hub` | Realized volatility inputs, D8 and D9 | US government, public domain, redistribution with attribution | **Imported** from `commodity-data-platform`, `config/sources.yaml` under `commodity.eia_daily_spot`. The 4 business day publication lag rule is inherited from there, not re-derived here |
+| CBOE OVX, series OVXCLS | Implied volatility proxy for WTI, feeding D11 VRP and D12 event study | CBOE copyright, "reprinted with permission" on FRED; personal non-commercial use with citation is established, anything beyond that needs CBOE permission per FRED's own guidance, treated conservatively here | **Project local.** Single consumer |
+| EIA daily spot: `wti_cushing`, `henry_hub` | Realized volatility inputs, D8 and D9 | US government, public domain, redistribution with attribution | **Project local.** Originally verified in `adaptive-stat-arb-commodities`'s D1 audit, 17 August 2026; copied here in full, including the 4 business day publication lag rule stated in full, in `docs/D1-data-audit.md` section 8.3, as of 18 August 2026 |
 | EIA weekly petroleum, gas storage reports; USDA WASDE schedule | Underlying data for D4 and future event work | US government data, unaffected by the CME or Euronext findings | Not yet formally routed; both are single agency government sources with no chain dependency |
 
 **Instrument caveat, applies to every downstream use of OVX and is not optional context:**
@@ -31,9 +31,9 @@ not the instrument itself.
 
 | Item | Status | Who resolves it, and how | Blocking date |
 |---|---|---|---|
-| CL futures, continuous | Unverified. Shared need with the relative value project, tracked in `commodity-data-platform/config/sources.yaml` under `cl_futures` | Whichever project's need resolves it first, route through the platform repo | Not currently blocking; project 3's WTI work runs on OVX and EIA spot regardless |
-| ZS, soybean futures | Unverified. Shared need with the relative value project's crush basket, tracked under `soybean_complex.shared_need` | Same as above | Not currently blocking; soybean event work has not started |
-| ZC, corn futures | Unverified. Single identified consumer, this project, per `zc_corn` in the platform config | No free daily source has been checked for it | Not currently blocking; WASDE event work has not started |
+| CL futures, continuous | Unverified. Shared need with the relative value project, neither side verified as of 18 August 2026. See `docs/D1-data-audit.md` section 11 | Whichever project resolves this first, the other should read that project's own D1 note before re-investigating | Not currently blocking; this project's WTI work runs on OVX and EIA spot regardless |
+| ZS, soybean futures | Unverified. Shared need with the relative value project's crush basket, its designated near certain anchor. See `docs/D1-data-audit.md` section 11 | Same as above | Not currently blocking; soybean event work has not started |
+| ZC, corn futures | Unverified. Single identified consumer, this project, as of 18 August 2026. See `docs/D1-data-audit.md` section 11 | No free daily source has been checked for it | Not currently blocking; WASDE event work has not started |
 | A general chain source, any exchange | No candidate identified. CME and Euronext both closed | An unidentified compliant exchange, or a future licensed purchase Brian chooses to fund | **Blocks D5 to D7, D13 to D15 indefinitely, no date attached**, since no candidate source exists to put a date against |
 
 ## What this project can currently claim

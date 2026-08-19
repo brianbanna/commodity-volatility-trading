@@ -297,21 +297,34 @@ pipeline for this specific product is unreliable.
 
 ### 8.3 EIA price series for realized volatility. Already PASS, per project 2's D1.
 
-The 5 series verified in `adaptive-stat-arb-commodities/docs/D1-data-audit.md` section 1
-are not re-verified here; that would duplicate a check. What this project adds:
+Originally verified in `adaptive-stat-arb-commodities/docs/D1-data-audit.md` section 1, on
+17 August 2026, and not re-verified here; that would duplicate a check. Retrieved over
+plain HTTPS, no API key, no account, no browser challenge, US government data, public
+domain, redistribution permitted with attribution:
 
-**The 4 business day publication lag applies here exactly as recorded there, with no
-weakening.** All 5 series were observed ending 2026-08-11 when queried on 2026-08-17.
-These are a history and realized volatility input, never a live daily source, and a
-backtest treating a print as available on its observation date is lookahead that voids
-the run, identically to the rule stated in project 2's note. Project 3's realized
-volatility library, D8, and its HAR forecast, D9, inherit this lag rule rather than
-re-deriving it.
+| Series | Endpoint | Rows | Range observed |
+|---|---|---|---|
+| WTI Cushing spot | `eia.gov/dnav/pet/hist_xls/RWTCd.xls` | 10221 | 1986-01-02 to 2026-08-11 |
+| Henry Hub spot | `eia.gov/dnav/ng/hist_xls/RNGWHHDd.xls` | 7431 | 1997-01-07 to 2026-08-11 |
 
-**This series is shared and is not ingested twice.** See task 4 and section 7 of
-CLAUDE.md: the EIA daily spot series and its lag rule now live in
-`commodity-data-platform`, imported by both this project and the relative value project.
-Nothing in `vol_trading/` re-implements this ingestion.
+This project uses `wti_cushing` and `henry_hub` specifically, for its realized volatility
+work. The other 3 series project 2 verified, Brent Europe, NY Harbor gasoline, and NY
+Harbor No 2 heating oil, feed that project's crack and Brent WTI baskets and have no use
+here.
+
+**The 4 business day publication lag applies here exactly as recorded there, stated in
+full, with no weakening.** All 5 series were observed ending 2026-08-11 when queried on
+2026-08-17. These are a history and realized volatility input, never a live daily source.
+A backtest treating an EIA spot print as available on its observation date is lookahead
+that voids the run. Project 3's realized volatility library, D8, and its HAR forecast, D9,
+apply this lag rule as stated here, not a weaker or re-derived version of it.
+
+**This finding was briefly shared through `commodity-data-platform`, retired 18 August
+2026.** Each project now owns its own ingestion. This project holds its own copy of the
+verification above rather than importing it; the original verification remains project
+2's, reached independently on 17 August 2026, and this project's copy is not a
+re-verification, only a record that the same finding is now owned in 2 places rather than
+imported from a third.
 
 ## 9. Track B, the Euronext verification spike. Time boxed to 1 day. FAILED at step 1.
 
@@ -383,7 +396,7 @@ change what Track A supports.**
 
 | Ranked goal | Supported | Basis |
 |---|---|---|
-| 1. Collection infrastructure | Partial | The scarce asset framing in Part B assumed CME chains. What survives is EIA realized vol inputs, shared via the platform repo, and OVX, project local |
+| 1. Collection infrastructure | Partial | The scarce asset framing in Part B assumed CME chains. What survives is EIA realized vol inputs, ingested here project locally as of 18 August 2026, and OVX, also project local |
 | VRP, the variance risk premium | Yes, as a proxy | OVX in place of CME WTI implied volatility, HAR forecast against EIA realized vol. The straddle structure in D11 as literally specified needs a strike chain to enter and exit against real settlement prices; without one, this is a level based proxy strategy priced through `statarb.pricing`, not a backtest against quoted CME markets. That distinction is stated in the eventual note, not elided |
 | Event study, D12 | Yes, modified | The spec's literal method prices the move from the shortest spanning straddle, which needs a chain. Without one, the priced move is read from OVX around the release instead. This is a substitution, recorded as one, not the spec's original method under the same name |
 | Realized volatility and HAR, D8 D9 | Yes | Runs entirely on the EIA series, unaffected by the chain question |
@@ -415,3 +428,31 @@ data reason rather than a research finding. The outcome is the same shape the sp
 designed for: no trade layer, a research gap recorded honestly, no strategy shipped without
 support. This is recorded as dropped for data reasons, not as a research negative, because
 those are 2 different findings and conflating them would misrepresent which one occurred.
+
+---
+
+## 11. Findings inherited from the now retired shared platform repo, 18 August 2026
+
+`commodity-data-platform` was retired 18 August 2026: each project now owns its own data
+ingestion rather than sharing a collection layer. The EIA daily spot finding is already
+made self contained in section 8.3 above. What remains is the platform repo's gap tracking
+relevant to this project, carried forward here rather than lost. No new source was checked
+to write this section.
+
+- **`cl_futures`.** Continuous CL futures were not verified for either this project or the
+  relative value project as of 18 August 2026. This project's WTI volatility work and that
+  project's crack and Brent WTI baskets need the same contract. Whichever project resolves
+  this first, the other should read that project's own D1 note
+  (`adaptive-stat-arb-commodities/docs/D1-data-audit.md`) before attempting an independent
+  check, so the search is not run twice.
+- **`soybean_complex`, ZS specifically.** No free daily source found. ZS is a needed
+  underlying for this project's soybean event and volatility work, and also for the
+  relative value project's crush basket, its designated near certain anchor. Both projects
+  are blocked on the same gap as of 18 August 2026.
+- **`zc_corn`.** No free daily source has been checked for this. As of 18 August 2026 this
+  is a single consumer need, this project only, for WASDE event work: the relative value
+  spec's basket universe does not include a corn leg.
+
+None of these gaps were resolved by the platform repo's retirement; they were unresolved
+before and remain unresolved after, now tracked in this project's own note rather than in a
+shared config file.

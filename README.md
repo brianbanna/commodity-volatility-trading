@@ -78,10 +78,10 @@ prohibited on the same grounds.
 For the data this project does use, the discipline is unchanged. Collection outranks every
 other task in this repo, a manifest gap is the highest priority incident, and `data/raw/`
 is immutable: a fix regenerates processed data from raw and never edits raw. The EIA daily
-spot series this project draws on is not collected here at all; it is imported from
-`commodity-data-platform`, which already collects it for the relative value project, so it
-is ingested once rather than twice, including the 4 business day publication lag rule
-recorded there.
+spot series this project draws on was originally verified in the relative value project's
+own D1 audit and is now held here as this project's own copy of that finding, including
+the 4 business day publication lag rule stated in full, in `docs/D1-data-audit.md` section
+8.3.
 
 ## Layout
 
@@ -119,12 +119,12 @@ Settlement tables are never republished in any artifact.
 
 **As actually verified, 18 August 2026**: CBOE's OVX crude oil implied volatility index,
 sourced via FRED series OVXCLS with attribution to both CBOE and FRED, project local to
-this repo; EIA daily petroleum and natural gas spot data, imported from
-`commodity-data-platform` rather than collected here; EIA weekly petroleum and gas storage
-reports and USDA's WASDE schedule, both government data unaffected by the CME or Euronext
-findings. CME chain data and Euronext chain and futures data are both prohibited under
-their respective terms of use; see `docs/D1-data-audit.md` for the full record with
-verbatim clauses.
+this repo; EIA daily petroleum and natural gas spot data, originally verified in the
+relative value project's D1 audit and held here as this project's own copy of that
+finding; EIA weekly petroleum and gas storage reports and USDA's WASDE schedule, both
+government data unaffected by the CME or Euronext findings. CME chain data and Euronext
+chain and futures data are both prohibited under their respective terms of use; see
+`docs/D1-data-audit.md` for the full record with verbatim clauses.
 
 ## License
 
